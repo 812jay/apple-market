@@ -15,14 +15,13 @@ router.get("/auth", auth, (req, res) => {
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
-        lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image,
     });
 });
 
 router.post("/register", (req, res) => {
-
+    console.log(req.body)
     const user = new User(req.body);
 
     user.save((err, doc) => {

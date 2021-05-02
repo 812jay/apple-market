@@ -38,10 +38,12 @@
 
 .menu__container .menu_left {
   float: left;
+  padding: 10px 20px;
 }
 
 .menu__container .menu_rigth {
   float: right;
+  padding: 10px 20px;
 }
 
 .menu__mobile-button {

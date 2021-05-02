@@ -1,5 +1,5 @@
 import React from 'react';
-import { SmileOutlined } from '@ant-design/icons';
+import { AppleFilled } from '@ant-design/icons';
 
 function Footer() {
     return (
@@ -8,7 +8,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize:'1rem'
         }}>
-           <p> Happy Coding  <SmileOutlined /></p>
+           <p> Apple Market! <AppleFilled style={{fontSize: '25px'}} /></p>
         </div>
     )
 }
