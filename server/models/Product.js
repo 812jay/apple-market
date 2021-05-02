@@ -25,11 +25,15 @@ const productSchema = Schema({
         type: Boolean,
         default: false
     },
+    sort: {
+        type: Number,
+        default: 1
+    },
     views: {
         type: Number,
         default: 0
     }
-}, {timeStamp: true});
+}, {timestamps: true});
 
 const Product = mongoose.model('Product', productSchema);
 
