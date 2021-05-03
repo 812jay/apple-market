@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
         default: 0 
     },
     image: String,
+    bookmark: {
+        type: Array,
+        default: []
+    },
     token : {
         type: String,
     },
