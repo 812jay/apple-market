@@ -10,9 +10,7 @@ const productSchema = Schema({
         type: String,
         maxlength: 50
     },
-    description: {
-        type: String
-    },
+    description: String,
     price: {
         type: Number,
         default: 0
