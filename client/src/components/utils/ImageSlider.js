@@ -2,7 +2,6 @@ import { Carousel } from 'antd'
 import React from 'react'
 
 function ImageSlider(props) {
-    console.log(props)
     return (
         <div>
             <Carousel>

@@ -5,6 +5,7 @@ import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
+import SearchFeature from './Sections/SearchFeature';
 import { sort, price } from './Sections/Datas';
 
 function LandingPage(props) {
@@ -17,6 +18,7 @@ function LandingPage(props) {
         sort: [],
         price: []
     });
+    const [SearchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
 
@@ -30,7 +32,6 @@ function LandingPage(props) {
     }, []);
 
     const getProducts = (body) => {
-
         axios.post('/api/product/products', body)
             .then(response => {
                 if(response.data.success){
@@ -82,7 +83,6 @@ function LandingPage(props) {
             limit: Limit,
             filters: filters
         }
-        
         getProducts(body);
         setSkip(0);
     }
@@ -112,6 +112,21 @@ function LandingPage(props) {
         setFilters(newFilters);
     }
 
+    const updateSearchTerm = (newSearchTerm) => {
+        setSearchTerm(newSearchTerm);
+
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: Filters,
+            searchTerm: newSearchTerm
+        } 
+
+        setSkip(0);
+        setSearchTerm(newSearchTerm);
+        getProducts(body);
+    }
+
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -131,7 +146,11 @@ function LandingPage(props) {
             </Row>
 
             {/* Search */}
-
+            <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
+                <SearchFeature 
+                    refreshFunction={updateSearchTerm}
+                />
+            </div>
             {/* Card */}
             <Row gutter={[16, 16]}>
                 {renderCards}
