@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Col, Row } from 'antd';
 import Meta from 'antd/lib/card/Meta';
-import ImageSlider from '../../utils/ImageSlider'
-
+import ImageSlider from '../../utils/ImageSlider';
+import CheckBox from './Sections/CheckBox';
+import { sort } from './Sections/Datas';
 
 function LandingPage(props) {
 
@@ -11,6 +12,10 @@ function LandingPage(props) {
     const [Skip, setSkip] = useState(0);
     const [Limit, setLimit] = useState(8);
     const [PostSize, setPostSize] = useState(0);
+    const [Filters, setFilters] = useState({
+        sort: [],
+        price: []
+    });
 
     useEffect(() => {
 
@@ -29,7 +34,7 @@ function LandingPage(props) {
             .then(response => {
                 if(response.data.success){
                     if(body.loadMore) {
-                        setProducts([...Products, ...response.data.productInfo]);
+                        setProducts([...Products,...response.data.productInfo ]);
                     } else {
                         setProducts(response.data.productInfo);
                     }
@@ -69,6 +74,26 @@ function LandingPage(props) {
             )
     });
 
+    const showFilteredResults = (filters) => {
+        
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: filters
+        }
+        
+        getProducts(body);
+        setSkip(0);
+    }
+
+    const handleFilters = (filters, category) => {
+        const newFilters = {...Filters};
+
+        newFilters[category] = filters;
+
+        showFilteredResults(newFilters);
+    }
+
     return (
         <div style={{ width: '75%', margin: '3rem auto' }}>
             <div style={{ textAlign: 'center' }}>
@@ -76,6 +101,15 @@ function LandingPage(props) {
             </div>
 
             {/* Filter */}
+            <Row gutter={[16, 16]}>
+                <Col lg={12} xs={24}>
+                    {/* CheckBox */}
+                    <CheckBox list={ sort } handleFilters={filters => handleFilters(filters, 'sort')}/>
+                </Col>
+                <Col lg={12} xs={24}>
+                    {/* Radio */}
+                </Col>
+            </Row>
 
             {/* Search */}
 

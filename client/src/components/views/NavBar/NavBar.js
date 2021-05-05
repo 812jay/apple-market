@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
-import { Drawer, Button, Icon } from 'antd';
+import { Drawer, Button } from 'antd';
 import './Sections/Navbar.css';
 import { AlignRightOutlined, AppleFilled } from '@ant-design/icons';
 
@@ -19,7 +19,7 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div className="menu__logo">
-        <a href="/"><AppleFilled style={{fontSize: '40px'}} /></a>
+        <a href="/"><AppleFilled style={{fontSize: '40px', color: '#eb3b5a'}} /></a>
       </div>
       <div className="menu__container">
         <div className="menu_left">
