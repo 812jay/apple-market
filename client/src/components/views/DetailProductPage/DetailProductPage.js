@@ -24,10 +24,10 @@ function DetailProductPage(props) {
 
     return (
         <div style={{ width: '100%', padding: '3rem 4rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <h1>{Product.title}</h1>
             </div>
-            <br />
+            <br /> */}
 
             <Row gutter={[16, 16]}>
                 <Col lg={12} sm={24}>
@@ -36,7 +36,7 @@ function DetailProductPage(props) {
                 </Col>
                 <Col lg={12} sm={24}>
                     {/* ProductInfo */}
-                    <ProductInfo />
+                    <ProductInfo detail={Product}/>
                 </Col>
             </Row>
 
