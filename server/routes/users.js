@@ -68,4 +68,67 @@ router.get("/logout", auth, (req, res) => {
     });
 });
 
+
+
+router.get("/addToBookmark", auth, (req, res) => {
+    console.log(req.body)
+    User.findOne({ _id: req.user._id }, (err, userInfo) => {
+        let duplicate = false;
+
+        console.log('productId: ',req.query.productId)
+
+        userInfo.bookmark.forEach((item) => {
+            if (item == req.query.productId) {
+                duplicate = true;
+            }
+        })
+
+        console.log('duplicate: ', duplicate)
+
+        if (duplicate) {
+            User.findOneAndUpdate(
+                { _id: req.user._id },
+                { $pull: { "bookmark": req.query.productId } },
+                { new: true },
+                (err, userInfo) => {
+                    console.log('exist')
+                    if (err) return res.json({ success: false, err });
+                    res.status(200).json(userInfo.bookmark)
+                }
+            )
+        } else {
+            User.findOneAndUpdate(
+                { _id: req.user._id },
+                {
+                    $push: {
+                        "bookmark": req.query.productId
+                    }
+                },
+                { new: true },
+                (err, userInfo) => {
+                    console.log('non')
+                    if (err) return res.json({ success: false, err });
+                    res.status(200).json(userInfo.bookmark)
+                }
+            )
+        }
+    })
+});
+
+
+// router.post("/addToBookmark", auth, (req, res) => { 
+//     let productId = req.body.productId;
+//     let userId = req.user._id;
+// //     User.findOneAndUpdate(
+// //         {_id: userId}, 
+// //         {bookmark: ''}, 
+// //         {upsert: true}, 
+// //         function(err, res) {
+
+// //         }
+            
+// //         )
+//     User.findOne({ _id: req.user._id },
+// })
+
 module.exports = router;

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Col, Row } from 'antd';
-import { CommentOutlined, HeartFilled, UserOutlined } from '@ant-design/icons';
+import { CommentOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { addToBookmark } from '../../../../_actions/user_actions';
 
 function ProductInfo(props) {
-    console.log(props.detail)
+    console.log(props)
+    const dispatch = useDispatch();
+
     const [Writer, setWriter] = useState('');
     const [DateForm, setDateForm] = useState('');
-    const [Sort, setSort] = useState('')
+    const [Sort, setSort] = useState('');
+    const [Price, setPrice] = useState('');
+    const [IsBookmark, setIsBookmark] = useState(false);
 
     useEffect(() => {
         let writer = '';
@@ -14,11 +20,11 @@ function ProductInfo(props) {
             writer = props.detail.writer.name;
         }
         setWriter(writer);
+        setPrice(props.detail.price);
         formatDate(new Date(props.detail.updatedAt));
         formatSort(props.detail.sort);
+        findBookmark(props.bookmarks);
     }, [props.detail]);
-
-
 
     const formatDate = (value) => {
         console.log(value)
@@ -48,6 +54,20 @@ function ProductInfo(props) {
         if(value === 8) sort = '도서/티켓/음반';
         if(value === 9) sort = '기타';
         setSort(sort);
+    };
+
+    const bookmarkHandler = () => {
+        dispatch(addToBookmark(props.detail._id))
+        .then(response => findBookmark(response.payload))
+    }
+
+    const findBookmark = (bookmarks) => {
+        let bookmark = false;
+        bookmarks.forEach((value, index) => {
+            console.log(value, index);
+            if(value === props.detail._id) bookmark = true;
+        })
+        setIsBookmark(bookmark)
     }
 
     return (
@@ -59,13 +79,22 @@ function ProductInfo(props) {
             <hr />
             <Row style={{display: 'flex'}}>
                 <Col span={22} style={{fontSize: '20px', fontWeight: 'bold'}}>{props.detail.title}</Col>
-                <Col style={{fontSize: '30px', color: '#e84118'}}><HeartFilled /></Col>
+                {/* {props.userId ===  ? } */}
+                <Col onClick={bookmarkHandler}>
+                    {IsBookmark ? 
+                    <HeartFilled style={{fontSize: '30px', color: '#e84118', cursor: 'pointer'}}/> 
+                    : <HeartOutlined style={{fontSize: '30px', cursor: 'pointer'}}/>}
+                    
+                </Col>  
             </Row>
             <Row>
                 <Col style={{color: '#7f8c8d'}}>{Sort} ▫ {DateForm}</Col>
             </Row>
             <Row>
-                <Button icon={<CommentOutlined />}>채팅으로 거래하기</Button>
+                <Col span={20}><Button icon={<CommentOutlined />}>채팅으로 거래하기</Button></Col>
+            </Row>
+            <Row>
+                <Col><span style={{fontSize: '20px'}}>{Price}원</span></Col>
             </Row>
             <br />
             <Row>

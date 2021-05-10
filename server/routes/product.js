@@ -58,7 +58,8 @@ router.post('/products', (req, res) => {
 
     if(term){
         Product.find(findArgs)
-        .find({$or: [{"title": { $regex: term }}, { "description": { $regex: term }}]})        .populate('writer')
+        .find({$or: [{"title": { $regex: term }}, { "description": { $regex: term }}]})        
+        .populate('writer')
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {

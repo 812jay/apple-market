@@ -4,6 +4,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    ADD_TO_BOOKMARK,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -45,5 +46,16 @@ export function logoutUser(){
         type: LOGOUT_USER,
         payload: request
     }
+}
+
+export function addToBookmark(id) {
+    const request = axios.get(`${USER_SERVER}/addToBookmark?productId=${id}`)
+                .then(response => response.data);
+
+    return {
+        type: ADD_TO_BOOKMARK,
+        payload: request
+    }
+
 }
 

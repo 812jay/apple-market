@@ -5,10 +5,10 @@ import ProductInfo from './Sections/ProductInfo';
 import { Row, Col } from 'antd';
 
 function DetailProductPage(props) {
-    // console.log(props)
     const productId = props.match.params.productId;
 
     const [Product, setProduct] = useState({});
+    const [Bookmark, setBookmark] = useState([]);
 
     useEffect(() => {
         axios.get(`/api/product/product_by_id?id=${productId}&type=single`)
@@ -22,13 +22,15 @@ function DetailProductPage(props) {
             })
     }, [])
 
+    useEffect(() => {
+        if(props.user.userData && props.user.userData._id){
+            console.log(props.user.userData);
+            setBookmark(props.user.userData.bookmark);
+        }
+    },[props.user.userData])
+
     return (
         <div style={{ width: '100%', padding: '3rem 4rem' }}>
-            {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h1>{Product.title}</h1>
-            </div>
-            <br /> */}
-
             <Row gutter={[16, 16]}>
                 <Col lg={12} sm={24}>
                     {/* ProductImage */}
@@ -36,12 +38,9 @@ function DetailProductPage(props) {
                 </Col>
                 <Col lg={12} sm={24}>
                     {/* ProductInfo */}
-                    <ProductInfo detail={Product}/>
+                    <ProductInfo detail={Product} bookmarks={Bookmark}/>
                 </Col>
             </Row>
-
-
-
         </div>
     )
 }
