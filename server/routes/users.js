@@ -115,20 +115,4 @@ router.get("/addToBookmark", auth, (req, res) => {
     })
 });
 
-
-// router.post("/addToBookmark", auth, (req, res) => { 
-//     let productId = req.body.productId;
-//     let userId = req.user._id;
-// //     User.findOneAndUpdate(
-// //         {_id: userId}, 
-// //         {bookmark: ''}, 
-// //         {upsert: true}, 
-// //         function(err, res) {
-
-// //         }
-            
-// //         )
-//     User.findOne({ _id: req.user._id },
-// })
-
 module.exports = router;

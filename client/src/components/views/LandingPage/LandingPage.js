@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Col, Row } from 'antd';
+import { Avatar, Card, Col, Row } from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
 import SearchFeature from './Sections/SearchFeature';
 import { sort, price } from './Sections/Datas';
+import { HeartOutlined, UserOutlined } from '@ant-design/icons';
 
 function LandingPage(props) {
 
@@ -28,7 +29,6 @@ function LandingPage(props) {
         }
 
         getProducts(body);
-
     }, []);
 
     const getProducts = (body) => {
@@ -56,21 +56,39 @@ function LandingPage(props) {
             limit: Limit,
             loadMore: true
         }
-
         getProducts(body);
         setSkip(skip);
     }
 
+    const getSort = (sortNum) => {
+        let sortStr =  '';
+        sort.forEach((value) => {
+            if(value._id === sortNum) sortStr = value.name
+        })
+        return sortStr;
+    }
+
     const renderCards = Products.map((product, index) => {
+        // console.log('product: ', product, ', user: ',props.user.userData.bookmark)
+        let sortStr = getSort(product.sort);
+        console.log(sortStr)
         return (
             <Col lg={6} md={8} xs={24} key={index}>
                 <Card
                     cover={<a href={`/product/${product._id}`}><ImageSlider images={product.images}/></a>}
                 >
-                    <Meta 
+                    {/* <Meta 
                         title={product.title}
-                        description={`₩${product.price}`}
-                    />
+                        description={(
+                            `${sortStr}`
+                        )}
+                    /> */}
+                    <div className="additional">
+                        <span>{product.title}</span><br />
+                        <span>{sortStr}</span><br />
+                        <span className="price">₩{product.price}</span><br />
+                        {/* <span><Avatar icon={<UserOutlined />} size='small'/>{product.writer.name}</span> */}
+                    </div>
                 </Card>
             </Col>
             )

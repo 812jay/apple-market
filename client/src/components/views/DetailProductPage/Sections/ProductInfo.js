@@ -94,7 +94,7 @@ function ProductInfo(props) {
                 <Col span={20}><Button icon={<CommentOutlined />}>채팅으로 거래하기</Button></Col>
             </Row>
             <Row>
-                <Col><span style={{fontSize: '20px'}}>{Price}원</span></Col>
+                <Col><span style={{fontSize: '20px'}}>₩{Price}</span></Col>
             </Row>
             <br />
             <Row>
