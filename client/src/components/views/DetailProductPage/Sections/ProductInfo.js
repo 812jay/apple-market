@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Col, Row } from 'antd';
 import { CommentOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { addToBookmark } from '../../../../_actions/user_actions';
+import { changeBookmark } from '../../../../_actions/user_actions';
 
 function ProductInfo(props) {
     console.log(props)
@@ -57,7 +57,7 @@ function ProductInfo(props) {
     };
 
     const bookmarkHandler = () => {
-        dispatch(addToBookmark(props.detail._id))
+        dispatch(changeBookmark(props.detail._id))
         .then(response => findBookmark(response.payload))
     }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { addToBookmark, getBookmarkItems } from '../../../_actions/user_actions';
+import { changeBookmark, getBookmarkItems } from '../../../_actions/user_actions';
 import UserCardBlock from './Sections/UserCardBlock';
 
 function BookmarkPage(props) {
@@ -25,7 +25,7 @@ function BookmarkPage(props) {
     }, [props.user.userData]);
     const removeFromBookmark = (productId) => {
         console.log(productId);
-        dispatch(addToBookmark(productId))
+        dispatch(changeBookmark(productId))
         .then(response => setProducts(response.payload.productInfo))
     }
     console.log('Products: ',Products)

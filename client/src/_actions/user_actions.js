@@ -4,8 +4,8 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
-    ADD_TO_BOOKMARK,
     GET_BOOKMARK_ITEMS,
+    CHANGE_BOOKMARK,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -49,12 +49,12 @@ export function logoutUser(){
     }
 }
 
-export function addToBookmark(id) {
-    const request = axios.get(`${USER_SERVER}/addToBookmark?productId=${id}`)
+export function changeBookmark(id) {
+    const request = axios.get(`${USER_SERVER}/changeBookmark?productId=${id}`)
                 .then(response => response.data);
 
     return {
-        type: ADD_TO_BOOKMARK,
+        type: CHANGE_BOOKMARK,
         payload: request
     }
 }
