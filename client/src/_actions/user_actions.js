@@ -5,6 +5,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     ADD_TO_BOOKMARK,
+    GET_BOOKMARK_ITEMS,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -56,6 +57,16 @@ export function addToBookmark(id) {
         type: ADD_TO_BOOKMARK,
         payload: request
     }
+}
 
+export function getBookmarkItems(bookmarkItems, userBookmark) {
+
+    const request = axios.get(`/api/product/products_by_id?id=${bookmarkItems}&type=array`)
+                .then(response => response.data);
+
+    return {
+        type: GET_BOOKMARK_ITEMS,
+        payload: request
+    }
 }
 

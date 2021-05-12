@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
+const { Product } = require('../models/Product');
 
 //=================================
 //             User
@@ -91,9 +92,15 @@ router.get("/addToBookmark", auth, (req, res) => {
                 { $pull: { "bookmark": req.query.productId } },
                 { new: true },
                 (err, userInfo) => {
+                    let bookmark = userInfo.bookmark;
                     console.log('exist')
-                    if (err) return res.json({ success: false, err });
-                    res.status(200).json(userInfo.bookmark)
+                    console.log('bookmark: ', userInfo.bookmark)
+                    Product.find({_id: { $in: bookmark}})
+                    .populate('writer')
+                    .exec((err, productInfo) => {
+                        if (err) return res.json({ success: false, err });
+                        res.status(200).json({productInfo, bookmark})
+                    })
                 }
             )
         } else {

@@ -11,7 +11,7 @@ function DetailProductPage(props) {
     const [Bookmark, setBookmark] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/product/product_by_id?id=${productId}&type=single`)
+        axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
             .then(response => {
                 if(response.data.success) {
                     console.log('response: ', response.data)        
@@ -20,7 +20,7 @@ function DetailProductPage(props) {
                     alert('상세정보 가져오기를 실패했습니다.')
                 }
             })
-    }, [])
+    }, []);
 
     useEffect(() => {
         if(props.user.userData && props.user.userData._id){

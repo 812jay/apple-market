@@ -4,6 +4,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     ADD_TO_BOOKMARK,
+    GET_BOOKMARK_ITEMS,
 } from '../_actions/types';
  
 
@@ -18,6 +19,8 @@ export default function(state={},action){
         case LOGOUT_USER:
             return {...state }
         case ADD_TO_BOOKMARK:
+            return {...state }
+        case GET_BOOKMARK_ITEMS:
             return {...state }
         default:
             return state;

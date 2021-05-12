@@ -21,7 +21,7 @@ function ProductImage(props) {
 
     return (
         <div>
-            <ImageGallery items={Images} />
+            <ImageGallery items={Images}/>
         </div>
     )
 }
