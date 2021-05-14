@@ -17,8 +17,16 @@ function LeftMenu(props) {
   }, [user.userData])
   return (
     <>
-      <Avatar icon={<UserOutlined />}/>&nbsp;&nbsp;
-      <span>{UserName}님 환영합니다!</span>
+    {user.userData && user.userData.isAuth ?
+      (
+        <>
+          <Avatar icon={<UserOutlined />}/>&nbsp;&nbsp;
+          <span>{UserName}님 환영합니다!</span>
+        </>
+      )
+      :
+      null
+    }
     </>
   )
 }

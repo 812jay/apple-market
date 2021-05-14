@@ -8,8 +8,7 @@ import { useSelector } from "react-redux";
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 
 function RightMenu(props) {
-  const user = useSelector(state => state.user)
-
+  const user = useSelector(state => state.user);
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
       if (response.status === 200) {
@@ -39,7 +38,10 @@ function RightMenu(props) {
         </Menu.Item>
 
         <Menu.Item key="bookmark" style={{}}>
-          <Badge count={5}>
+          <Badge count={
+              user.userData && user.userData.bookmark 
+              ? user.userData.bookmark.length : 0}
+            >
             <a href="/user/bookmark" className="head-example" style={{marginRight: -22, marginTop: 5}} >
               <HeartFilled style={{fontSize: 30, marginBottom: 3, color: '#e84118'}}/>
             </a>

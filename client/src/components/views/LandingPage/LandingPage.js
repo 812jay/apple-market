@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Avatar, Card, Col, Row } from 'antd';
-import Meta from 'antd/lib/card/Meta';
+import {  Card, Col, Row } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
 import SearchFeature from './Sections/SearchFeature';
 import { sort, price } from './Sections/Datas';
-import { HeartOutlined, UserOutlined } from '@ant-design/icons';
 
 function LandingPage(props) {
 
@@ -22,7 +20,6 @@ function LandingPage(props) {
     const [SearchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-
         let body = {
             skip: Skip,
             limit: Limit
@@ -30,6 +27,7 @@ function LandingPage(props) {
 
         getProducts(body);
     }, []);
+    console.log(Products)
 
     const getProducts = (body) => {
         axios.post('/api/product/products', body)
@@ -67,27 +65,21 @@ function LandingPage(props) {
         })
         return sortStr;
     }
+    
+
 
     const renderCards = Products.map((product, index) => {
         // console.log('product: ', product, ', user: ',props.user.userData.bookmark)
         let sortStr = getSort(product.sort);
-        console.log(sortStr)
         return (
             <Col lg={6} md={8} xs={24} key={index}>
                 <Card
                     cover={<a href={`/product/${product._id}`}><ImageSlider images={product.images}/></a>}
                 >
-                    {/* <Meta 
-                        title={product.title}
-                        description={(
-                            `${sortStr}`
-                        )}
-                    /> */}
                     <div className="additional">
                         <span>{product.title}</span><br />
                         <span>{sortStr}</span><br />
                         <span className="price">₩{product.price}</span><br />
-                        {/* <span><Avatar icon={<UserOutlined />} size='small'/>{product.writer.name}</span> */}
                     </div>
                 </Card>
             </Col>
