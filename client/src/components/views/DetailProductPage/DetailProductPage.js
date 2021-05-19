@@ -9,6 +9,7 @@ function DetailProductPage(props) {
 
     const [Product, setProduct] = useState({});
     const [Bookmark, setBookmark] = useState([]);
+    const [UserId, setUserId] = useState('');
 
     useEffect(() => {
         axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
@@ -26,6 +27,7 @@ function DetailProductPage(props) {
         if(props.user.userData && props.user.userData._id){
             console.log(props.user.userData);
             setBookmark(props.user.userData.bookmark);
+            setUserId(props.user.userData._id)
         }
     },[props.user.userData])
 
@@ -38,7 +40,7 @@ function DetailProductPage(props) {
                 </Col>
                 <Col lg={12} sm={24}>
                     {/* ProductInfo */}
-                    <ProductInfo detail={Product} bookmarks={Bookmark}/>
+                    <ProductInfo detail={Product} bookmarks={Bookmark} userId={UserId} />
                 </Col>
             </Row>
         </div>
