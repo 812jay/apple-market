@@ -109,4 +109,14 @@ router.get('/products_by_id', (req, res) => {
         })
 });
 
+router.get('/remove_product', (req, res) => {
+    console.log(req.query.productId);
+    let productId = req.query.productId;
+    Product.findOneAndDelete({_id: productId})
+    .exec((err) => {
+        if(err) return res.status(400).send(err);
+        return res.status(200).send({success:true})
+    })
+})
+
 module.exports = router;

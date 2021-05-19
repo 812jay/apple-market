@@ -14,7 +14,8 @@ const sortList = [
     {key: 6, value: '뷰티/미용'}, 
     {key: 7, value: '반려동물'},
     {key: 8, value: '도서/티켓/음반'},
-    {key: 9, value: '기타'}
+    {key: 9, value: '스포츠/레저'},
+    {key: 10, value: '기타'}
 ];
 
 function UploadProductPage(props) {

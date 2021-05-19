@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Col, Row } from 'antd';
-import { CommentOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
+import { CommentOutlined, DeleteOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { changeBookmark } from '../../../../_actions/user_actions';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 
 function ProductInfo(props) {
     console.log(props)
@@ -13,11 +15,15 @@ function ProductInfo(props) {
     const [Sort, setSort] = useState('');
     const [Price, setPrice] = useState('');
     const [IsBookmark, setIsBookmark] = useState(false);
+    const [IsWriter, setIsWriter] = useState(false);
 
     useEffect(() => {
         let writer = '';
         if(props.detail.writer) {
             writer = props.detail.writer.name;
+            if(props.userId === props.detail.writer._id) {
+                setIsWriter(true);
+            }
         }
         setWriter(writer);
         setPrice(props.detail.price);
@@ -52,7 +58,8 @@ function ProductInfo(props) {
         if(value === 6) sort = '뷰티/미용';
         if(value === 7) sort = '반려동물';
         if(value === 8) sort = '도서/티켓/음반';
-        if(value === 9) sort = '기타';
+        if(value === 9) sort = '스포츠/레저';
+        if(value === 10) sort = '기타';
         setSort(sort);
     };
 
@@ -70,6 +77,27 @@ function ProductInfo(props) {
         setIsBookmark(bookmark)
     }
 
+    const removeProduct = () => {
+        let productId = '';
+        let confirm = window.confirm('해당 게시글을 삭제 하시겠습니까?');
+        if(props.detail){
+            productId = props.detail._id;
+        }
+        console.log(productId)
+        if(confirm){
+            axios.get(`/api/product/remove_product?productId=${productId}`)
+            .then(response => {
+                if(response.data.success){
+                    alert('게시글을 삭제 했습니다.');
+                    props.history.push('/');
+                } else {
+                    alert('게시글 삭제에 실패 했습니다.');
+                }
+            })
+        }        
+
+    }
+
     return (
         <div>
             <Row style={{fontSize: '25px'}}>
@@ -78,13 +106,18 @@ function ProductInfo(props) {
             </Row>
             <hr />
             <Row style={{display: 'flex'}}>
-                <Col span={22} style={{fontSize: '20px', fontWeight: 'bold'}}>{props.detail.title}</Col>
-                {/* {props.userId ===  ? } */}
+                <Col span={22} style={{fontSize: '20px', fontWeight: 'bold'}}>
+                    <span style={{marginRight: '10px'}}>{props.detail.title}</span>
+                    {IsWriter ?
+                        <span><DeleteOutlined onClick={removeProduct} style={{fontSize: '30px', cursor: 'pointer'}}/></span>
+                        : 
+                        null
+                    }
+                </Col>
                 <Col onClick={bookmarkHandler}>
                     {IsBookmark ? 
                     <HeartFilled style={{fontSize: '30px', color: '#e84118', cursor: 'pointer'}}/> 
                     : <HeartOutlined style={{fontSize: '30px', cursor: 'pointer'}}/>}
-                    
                 </Col>  
             </Row>
             <Row>
@@ -104,4 +137,4 @@ function ProductInfo(props) {
     )
 }
 
-export default ProductInfo
+export default withRouter(ProductInfo);

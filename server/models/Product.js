@@ -27,6 +27,11 @@ const productSchema = Schema({
         type: Number,
         default: 1
     },
+    area: {
+        type: Number,
+        default: 1
+    },
+    detailedArea: String,
     views: {
         type: Number,
         default: 0
