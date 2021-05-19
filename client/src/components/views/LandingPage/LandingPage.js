@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {  Card, Col, Row } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
-import CheckBox from './Sections/CheckBox';
-import RadioBox from './Sections/RadioBox';
+import CheckBox from './Sections/SortBox';
+import RadioBox from './Sections/PriceBox';
 import SearchFeature from './Sections/SearchFeature';
 import { sort, price } from './Sections/Datas';
 

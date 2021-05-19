@@ -23,7 +23,6 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    console.log(req.body)
     const user = new User(req.body);
 
     user.save((err, doc) => {
@@ -71,20 +70,15 @@ router.get("/logout", auth, (req, res) => {
 
 
 
-router.get("/addToBookmark", auth, (req, res) => {
-    console.log(req.body)
+router.get("/changeBookmark", auth, (req, res) => {
     User.findOne({ _id: req.user._id }, (err, userInfo) => {
         let duplicate = false;
-
-        console.log('productId: ',req.query.productId)
 
         userInfo.bookmark.forEach((item) => {
             if (item == req.query.productId) {
                 duplicate = true;
             }
         })
-
-        console.log('duplicate: ', duplicate)
 
         if (duplicate) {
             User.findOneAndUpdate(
@@ -93,8 +87,6 @@ router.get("/addToBookmark", auth, (req, res) => {
                 { new: true },
                 (err, userInfo) => {
                     let bookmark = userInfo.bookmark;
-                    console.log('exist')
-                    console.log('bookmark: ', userInfo.bookmark)
                     Product.find({_id: { $in: bookmark}})
                     .populate('writer')
                     .exec((err, productInfo) => {
@@ -113,9 +105,13 @@ router.get("/addToBookmark", auth, (req, res) => {
                 },
                 { new: true },
                 (err, userInfo) => {
-                    console.log('non')
-                    if (err) return res.json({ success: false, err });
-                    res.status(200).json(userInfo.bookmark)
+                    let bookmark = userInfo.bookmark;
+                    Product.find({_id: { $in: bookmark}})
+                    .populate('writer')
+                    .exec((err, productInfo) => {
+                        if (err) return res.json({ success: false, err });
+                        res.status(200).json({productInfo, bookmark})
+                    })
                 }
             )
         }
