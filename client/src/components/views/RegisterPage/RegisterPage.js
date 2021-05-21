@@ -47,16 +47,16 @@ function RegisterPage(props) {
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string()
-          .required('Name is required'),
+          .required('닉네임을 입력해주세요.'),
         email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
+          .email('이메일이 유효하지 않습니다.')
+          .required('이메일을 입력해 주세요.'),
         password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
-          .required('Password is required'),
+          .min(6, '비밀번호는 6글자 이상이어야 합니다.')
+          .required('비밀번호를 입력해주세요.'),
         confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Confirm Password is required')
+          .oneOf([Yup.ref('password'), null], '비밀번호 확인이 일치해야 합니다.')
+          .required('비밀번호 확인을 입력해주세요.')
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -97,10 +97,10 @@ function RegisterPage(props) {
             <h2>회원가입</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
 
-              <Form.Item required label="이름">
+              <Form.Item required label="닉네임">
                 <Input
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder="닉네임을 입력해 주세요."
                   type="text"
                   value={values.name}
                   onChange={handleChange}
@@ -117,7 +117,7 @@ function RegisterPage(props) {
               <Form.Item required label="이메일" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
-                  placeholder="Enter your Email"
+                  placeholder="이메일을 입력해 주세요."
                   type="email"
                   value={values.email}
                   onChange={handleChange}
@@ -131,10 +131,10 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="패스워드" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
+              <Form.Item required label="비밀번호" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
                 <Input
                   id="password"
-                  placeholder="Enter your password"
+                  placeholder="비밀번호를 입력해 주세요."
                   type="password"
                   value={values.password}
                   onChange={handleChange}
@@ -151,7 +151,7 @@ function RegisterPage(props) {
               <Form.Item required label="비밀번호 확인" hasFeedback>
                 <Input
                   id="confirmPassword"
-                  placeholder="Enter your confirmPassword"
+                  placeholder="비밀번호 확인을 입력해 주세요."
                   type="password"
                   value={values.confirmPassword}
                   onChange={handleChange}
