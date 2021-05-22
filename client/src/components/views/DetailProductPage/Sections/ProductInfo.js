@@ -115,12 +115,14 @@ function ProductInfo(props) {
             </Row>
             <hr />
             <Row style={{display: 'flex'}}>
-                <Col span={22} style={{fontSize: '20px', fontWeight: 'bold'}}>
+                <Col lg={23} xs={18} style={{fontSize: '20px', fontWeight: 'bold'}}>
                     <span style={{marginRight: '10px'}}>{props.detail.title}</span>
                     {IsWriter ?
                         <>
-                            <a href={`/product/edit/${ProductId}`}><EditOutlined style={{fontSize: '30px', cursor: 'pointer', marginRight: '15px'}}/></a>
-                            <span><DeleteOutlined onClick={removeProduct} style={{fontSize: '30px', cursor: 'pointer'}}/></span>
+                            {/* <a href={`/product/edit/${ProductId}`}><EditOutlined style={{fontSize: '30px', cursor: 'pointer', marginRight: '15px'}}/></a>
+                            <span><DeleteOutlined onClick={removeProduct} style={{fontSize: '30px', cursor: 'pointer'}}/></span> */}
+                            <a href={`/product/edit/${ProductId}`}><Button>수정</Button></a>
+                            <span><Button onClick={removeProduct}>삭제</Button></span>
                         </>
                         : 
                         null

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
-// import './ProductImage.css';
+import './ProductImage.css';
 
 function ProductImage(props) {
     
@@ -21,9 +21,10 @@ function ProductImage(props) {
 
     return (
         <div>
-            <ImageGallery items={Images}/>
+            <ImageGallery items={Images} />
         </div>
     )
 }
+
 
 export default ProductImage

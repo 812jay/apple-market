@@ -34,11 +34,11 @@ function DetailProductPage(props) {
     return (
         <div style={{ width: '100%', padding: '3rem 4rem' }}>
             <Row gutter={[16, 16]}>
-                <Col lg={12} sm={24}>
+                <Col lg={11} sm={24}>
                     {/* ProductImage */}
                     <ProductImage detail={Product}/>
                 </Col>
-                <Col lg={12} sm={24}>
+                <Col lg={13} sm={24}>
                     {/* ProductInfo */}
                     <ProductInfo detail={Product} bookmarks={Bookmark} userId={UserId} />
                 </Col>
