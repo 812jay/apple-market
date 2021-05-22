@@ -138,10 +138,8 @@ function ProductInfo(props) {
                 <Col style={{color: '#7f8c8d'}}>{Sort} ▫ {DateForm}</Col>
             </Row>
             <Row>
-                <Col span={20}><Button icon={<CommentOutlined />}>채팅으로 거래하기</Button></Col>
-            </Row>
-            <Row>
-                <Col><span style={{fontSize: '20px'}}>₩{Price}</span></Col>
+                <Col lg={19} xs={12}><span style={{fontSize: '20px'}}>₩{Price}</span></Col>
+                <Col><Button icon={<CommentOutlined />}>채팅으로 거래하기</Button></Col>
             </Row>
             <br />
             <Row>
