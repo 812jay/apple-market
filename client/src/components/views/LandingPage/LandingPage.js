@@ -27,14 +27,13 @@ function LandingPage(props) {
 
         getProducts(body);
     }, []);
-    console.log(Products)
 
     const getProducts = (body) => {
         axios.post('/api/product/products', body)
             .then(response => {
                 if(response.data.success){
                     if(body.loadMore) {
-                        setProducts([...Products,...response.data.productInfo ]);
+                        setProducts([...response.data.productInfo, ...Products ]);
                     } else {
                         setProducts(response.data.productInfo);
                     }
@@ -69,7 +68,6 @@ function LandingPage(props) {
 
 
     const renderCards = Products.map((product, index) => {
-        // console.log('product: ', product, ', user: ',props.user.userData.bookmark)
         let sortStr = getSort(product.sort);
         return (
             <Col lg={6} md={8} xs={24} key={index}>

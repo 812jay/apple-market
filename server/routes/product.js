@@ -26,11 +26,30 @@ router.post('/image', (req, res) => {
 
 router.post('/', (req, res) => {
     //받아온 정보들을 DB에 넣어준다.
-    const product = new Product(req.body);
-    product.save((err) => {
-        if(err) return res.status(400).json({ success: false, err });
-        return res.status(200).json({ success: true })
-    })
+    const product = req.body;
+    if(req.body.productId){
+        Product.findOneAndUpdate({_id: req.body.productId}, {
+            _id: product.productId,
+            writer: product.writer,
+            description: product.description,
+            price: product.price,
+            images: product.images,
+            sort: product.sort
+        })
+        .exec((err, productInfo) => {            
+            if(err) return res.status(400).json({ success: false, err });
+            return res.status(200).json({ 
+                success: true, 
+                productInfo
+            });
+        })
+    } else {
+        const product = new Product(req.body);
+        product.save((err) => {
+            if(err) return res.status(400).json({ success: false, err });
+            return res.status(200).json({ success: true })
+        })
+    }
 });
 
 router.post('/products', (req, res) => {
@@ -59,6 +78,7 @@ router.post('/products', (req, res) => {
     if(term){
         Product.find(findArgs)
         .find({$or: [{"title": { $regex: term }}, { "description": { $regex: term }}]})        
+        .sort({"createdAt": -1})
         .populate('writer')
         .skip(skip)
         .limit(limit)
@@ -72,6 +92,7 @@ router.post('/products', (req, res) => {
         });
     } else {
         Product.find(findArgs)
+        .sort({"createdAt": -1})
         .populate('writer')
         .skip(skip)
         .limit(limit)
@@ -91,7 +112,6 @@ router.get('/products_by_id', (req, res) => {
 
     let type = req.query.type;
     let productIds = req.query.id;
-    console.log(productIds)
     //productId를 이용해서 DB에서 productId와 같은 상품의 정보를 가져온다.
     if(type === 'array') {
         let ids = req.query.id.split(',');
@@ -103,14 +123,12 @@ router.get('/products_by_id', (req, res) => {
     Product.find({ _id: {$in: productIds} })
         .populate('writer')
         .exec((err, product) => {
-            console.log('product: ', product);
             if(err) return res.status(400).send(err);
             return res.status(200).json({success: true, product});
         })
 });
 
 router.get('/remove_product', (req, res) => {
-    console.log(req.query.productId);
     let productId = req.query.productId;
     Product.findOneAndDelete({_id: productId})
     .exec((err) => {

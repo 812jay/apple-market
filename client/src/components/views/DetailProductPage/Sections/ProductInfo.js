@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Col, Row } from 'antd';
-import { CommentOutlined, DeleteOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
+import { CommentOutlined, DeleteOutlined, EditOutlined, HeartFilled, HeartOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { changeBookmark } from '../../../../_actions/user_actions';
 import axios from 'axios';
@@ -10,6 +10,7 @@ function ProductInfo(props) {
     console.log(props)
     const dispatch = useDispatch();
 
+    const [ProductId, setProductId] = useState('');
     const [Writer, setWriter] = useState('');
     const [DateForm, setDateForm] = useState('');
     const [Sort, setSort] = useState('');
@@ -25,6 +26,8 @@ function ProductInfo(props) {
                 setIsWriter(true);
             }
         }
+
+        setProductId(props.detail._id);
         setWriter(writer);
         setPrice(props.detail.price);
         formatDate(new Date(props.detail.updatedAt));
@@ -69,11 +72,12 @@ function ProductInfo(props) {
 
     const bookmarkHandler = () => {
         dispatch(changeBookmark(props.detail._id))
-        .then(response => findBookmark(response.payload))
+        .then(response => findBookmark(response.payload.bookmark))
     }
 
     const findBookmark = (bookmarks) => {
         let bookmark = false;
+        console.log(bookmarks)
         bookmarks.forEach((value, index) => {
             console.log(value, index);
             if(value === props.detail._id) bookmark = true;
@@ -99,8 +103,9 @@ function ProductInfo(props) {
                 }
             })
         }        
-
     }
+
+
 
     return (
         <div>
@@ -113,7 +118,10 @@ function ProductInfo(props) {
                 <Col span={22} style={{fontSize: '20px', fontWeight: 'bold'}}>
                     <span style={{marginRight: '10px'}}>{props.detail.title}</span>
                     {IsWriter ?
-                        <span><DeleteOutlined onClick={removeProduct} style={{fontSize: '30px', cursor: 'pointer'}}/></span>
+                        <>
+                            <a href={`/product/edit/${ProductId}`}><EditOutlined style={{fontSize: '30px', cursor: 'pointer', marginRight: '15px'}}/></a>
+                            <span><DeleteOutlined onClick={removeProduct} style={{fontSize: '30px', cursor: 'pointer'}}/></span>
+                        </>
                         : 
                         null
                     }

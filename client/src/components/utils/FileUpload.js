@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { PlusOutlined } from '@ant-design/icons';
 import Axios from 'axios';
 function FileUpload(props) {
-
+    console.log('File Props: ',props)
     const [Images, setImages] = useState([])
+
+    useEffect(() => {
+        if(props.images.length > 0){
+            setImages(props.images)
+        }
+    }, [props.images])
 
     const onDrop = (files) => {
         console.log(files)

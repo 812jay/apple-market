@@ -10,7 +10,6 @@ function LeftMenu(props) {
   const user = useSelector(state => state.user);
   const [UserName, setUserName] = useState('');
   useEffect(() => {
-    console.log(user)
     if(user.userData && user.userData.name){
       setUserName(user.userData.name);
     }

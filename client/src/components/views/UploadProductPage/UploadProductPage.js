@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Form, Input } from 'antd';
+import { Avatar, Button, Descriptions, Form, Input } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import FileUpload from '../../utils/FileUpload';
 import axios from 'axios';
@@ -8,11 +8,35 @@ import { sort } from './Sections/Data';
 
 
 function UploadProductPage(props) {
+    let productId = '';
+    if(props.match.params){
+        productId = props.match.params.productId;
+    }
     const [Images, setImages] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Price, setPrice] = useState(0);
     const [Sort, setSort] = useState(1);
+
+    useEffect(() => {
+        console.log('productId: ', productId);
+        if(productId){
+            axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
+            .then(response => {
+                if(response.data.success) {
+                    const product = response.data.product[0];   
+                    console.log('product info: ', product)
+                    setImages(product.images);
+                    setTitle(product.title);
+                    setDescription(product.description);
+                    setPrice(product.price);
+                    setSort(product.sort);
+                } else {
+                    alert('상세정보 가져오기를 실패했습니다.')
+                }
+            })
+        }
+    }, [props.match.params])
 
     const titleChangeHandler = (event) => {
         setTitle(event.currentTarget.value);
@@ -32,6 +56,7 @@ function UploadProductPage(props) {
 
     
     const updateImages = (newImages) => {
+        console.log(newImages)
         setImages(newImages);
     }
 
@@ -41,7 +66,7 @@ function UploadProductPage(props) {
             return alert('모든값을 넣어주세요.');
         }
 
-        const body = {
+        let body = {
             writer: props.user.userData._id,
             title: Title,
             description: Description,
@@ -49,7 +74,9 @@ function UploadProductPage(props) {
             images: Images,
             sort: Sort
         }
+        if(productId) body = {...body, productId: productId}
 
+        console.log(body)
         axios.post('/api/product', body)
             .then(response => {
                 if(response.data.success){
@@ -65,6 +92,11 @@ function UploadProductPage(props) {
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <Form onSubmit={onSubmit}>
+                {/* {productId ?
+                    <h1>{productId}</h1>
+                    :
+                    null
+                } */}
                 <Form.Item>
                     <div>
                         <Avatar size='large' icon={<UserOutlined />}/>
@@ -72,25 +104,25 @@ function UploadProductPage(props) {
                     </div>
                 </Form.Item>
                 <Form.Item>
-                    <FileUpload refreshFunction={updateImages}/>
+                    <FileUpload refreshFunction={updateImages} images={Images}/>
                 </Form.Item>
                 <Form.Item>
                     <label>제목</label>
-                    <Input onChange={titleChangeHandler}/>
+                    <Input onChange={titleChangeHandler} value={Title}/>
                 </Form.Item>
                 <Form.Item>
                     <label>설명</label>
-                    <TextArea onChange={descriptionChangeHandler}/>
+                    <TextArea onChange={descriptionChangeHandler} value={Description}/>
                 </Form.Item>
                 <Form.Item>
                     <label>가격</label>
                     <br />
-                    <Input onChange={priceChangeHandler} prefix="₩" suffix="원" style={{width: '140px'}}/>
+                    <Input onChange={priceChangeHandler} prefix="₩" suffix="원" style={{width: '140px'}} value={Price}/>
                 </Form.Item>
                 <Form.Item>
                     <label>분류</label>
                     <br />
-                    <select onChange={sortChangeHandler}>
+                    <select onChange={sortChangeHandler} value={Sort}>
                         {sort.map(item => (
                             <option key={item.key} value={item.key}>{item.value}</option>
                         ))}
