@@ -15,6 +15,5 @@ yarn-error.log*
 
 .gitignore
 
-/portfolio_img
 
 /uploads

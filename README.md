@@ -25,19 +25,19 @@ react, redux, node.js
 
 ## 페이지
 - 로그인 페이지
-![login](./portfolio_img/login_page.PNG)
+![login](./page_img/login_page.PNG)
 
 - 회원가입 페이지
-![register](./portfolio_img/register_page.PNG)
+![register](./page_img/register_page.PNG)
 
 - 메인 페이지
-![landing](./portfolio_img/landing_page.PNG)
+![landing](./page_img/landing_page.PNG)
 
 - 상세보기 페이지
-![product_detail](./portfolio_img/product_detail_page.PNG)
+![product_detail](./page_img/product_detail_page.PNG)
 
 - 상품업로드 / 게시글 수정 페이지
-![edit](./portfolio_img/edit_page.PNG)
+![edit](./page_img/edit_page.PNG)
 
 - 찜한 상품
-![bookmark](./portfolio_img/bookmark_page.PNG)
+![bookmark](./page_img/bookmark_page.PNG)
