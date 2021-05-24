@@ -115,7 +115,7 @@ function ProductInfo(props) {
             </Row>
             <hr />
             <Row style={{display: 'flex'}}>
-                <Col lg={23} xs={18} style={{fontSize: '20px', fontWeight: 'bold'}}>
+                <Col lg={23} xs={23} style={{fontSize: '20px', fontWeight: 'bold'}}>
                     <span style={{marginRight: '10px'}}>{props.detail.title}</span>
                     {IsWriter ?
                         <>
